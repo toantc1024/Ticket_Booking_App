@@ -7,6 +7,7 @@ import (
 	"log"
 	"tickets/configs"
 	"tickets/database"
+	"tickets/routes"
 )
 
 func init() {
@@ -30,10 +31,9 @@ func main() {
 		AllowCredentials: false,
 	}))
 
-	micro.Route("/users", func(router fiber.Router) {
-		//router.Post("/", controllers.CreateNoteHandler)
-		//router.Get("", controllers.FindNotes)
-	})
+	routes.UserRoutes(micro, database.DB)
+
+	// Route GET healthcheck mặc định
 	micro.Get("/check", func(c *fiber.Ctx) error {
 		return c.Status(200).JSON(fiber.Map{
 			"status":  "success",

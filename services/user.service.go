@@ -34,6 +34,7 @@ func (s *userService) CreateUser(user *models.CreateUserSchema) (*models.User, e
 		Name:     user.Name,
 		Email:    user.Email,
 		Password: string(hashedPassword),
+		Role:     models.UserRole,
 	}
 
 	err = s.repo.CreateUser(newUser)
