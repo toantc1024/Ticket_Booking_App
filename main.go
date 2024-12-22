@@ -32,6 +32,10 @@ func main() {
 	}))
 
 	routes.UserRoutes(micro, database.DB)
+	routes.BookingRoutes(micro, database.DB)
+	routes.TicketRoutes(micro, database.DB)
+	routes.BookingRoutes(micro, database.DB)
+	routes.PaymentRoutes(micro, database.DB)
 
 	// Route GET healthcheck mặc định
 	micro.Get("/check", func(c *fiber.Ctx) error {

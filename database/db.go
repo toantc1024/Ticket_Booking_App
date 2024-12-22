@@ -27,6 +27,9 @@ func ConnectDB(config *configs.Config) {
 
 	log.Println("...... Migrating Tables .......")
 	DB.AutoMigrate(&models.User{})
+	DB.AutoMigrate(&models.Payment{})
+	DB.AutoMigrate(&models.Ticket{})
+	DB.AutoMigrate(&models.Booking{})
 
 	log.Println("🚀 Kết nối CSDL thành công!")
 }

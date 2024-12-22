@@ -14,7 +14,8 @@ const (
 )
 
 type User struct {
-	ID        string    `gorm:"type:char(36);primary_key" json:"id,omitempty"`
+	gorm.Model
+	UserID    string    `gorm:"type:char(36);primary_key" json:"user_id,omitempty"`
 	Name      string    `gorm:"type:varchar(255);not null" json:"name,omitempty" validate:"required,min=3,max=255"`
 	Email     string    `gorm:"type:varchar(255);uniqueIndex:idx_users_email,LENGTH(255);not null" json:"email,omitempty" validate:"required,email,min=3,max=255"`
 	Password  string    `gorm:"type:varchar(255);not null" json:"password,omitempty" validate:"required,min=6,max=255"`
@@ -23,9 +24,8 @@ type User struct {
 }
 
 func (user *User) BeforeCreate(tx *gorm.DB) (err error) {
-	user.ID = uuid.New().String()
+	user.UserID = uuid.New().String()
 	user.CreatedAt = time.Now()
-	
 	return nil
 }
 
@@ -42,7 +42,7 @@ type UpdateUserSchema struct {
 }
 
 type UserResponseSchema struct {
-	ID        string    `json:"id,omitempty"`
+	UserID    string    `json:"userID,omitempty"`
 	Name      string    `json:"name,omitempty"`
 	Email     string    `json:"email,omitempty"`
 	Role      Role      `json:"role,omitempty"`
@@ -51,7 +51,7 @@ type UserResponseSchema struct {
 
 func (user *User) ToResponse() UserResponseSchema {
 	return UserResponseSchema{
-		ID:        user.ID,
+		UserID:    user.UserID,
 		Name:      user.Name,
 		Email:     user.Email,
 		Role:      user.Role,
